@@ -1,0 +1,20 @@
+<div ng-controller="UserCtrl">
+  <h1>Search an user</h1>
+
+  <p>The first step is to give the user name</p>
+
+  <div id="imaginary_container">
+    <div class="input-group stylish-input-group">
+      <input type="text" class="form-control" placeholder="Search" ng-model="userName">
+                    <span class="input-group-addon">
+                        <button type="submit" ng-click="searchUser()">
+                          <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+    </div>
+  </div>
+
+  <ul class="list-group">
+    <li class="list-group-item choice" ng-repeat="item in items" ng-click="selectUser(item)">{{ item.login }}</li>
+  </ul>
+</div>
