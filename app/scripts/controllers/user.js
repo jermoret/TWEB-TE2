@@ -8,7 +8,7 @@
  * Controller of the twebTe2App
  */
 angular.module('twebTe2App')
-  .controller('UserCtrl', function ($scope, $http, ApiGithub, $state) {
+  .controller('UserCtrl', function ($scope, $http, ApiGithub, $state, $stateParams) {
 
     $scope.searchUser = function() {
       $http.get(ApiGithub.url + "/search/users?q=" + $scope.userName)
