@@ -8,8 +8,10 @@
  * Controller of the twebTe2App
  */
 angular.module('twebTe2App')
-  .controller('UserStatsCtrl', function ($scope, $stateParams, ApiGithub, $http) {
-    
+  .controller('UserStatsCtrl', function ($scope, $stateParams, ApiGithub, $http, $state) {
+
+    $scope.userLogin = $stateParams.userLogin;
+
     $http.get(ApiGithub.url + "/users/" + $stateParams.userLogin)
       .then(function (response) {
         $scope.avatarURL = response.data.avatar_url;
@@ -36,19 +38,27 @@ angular.module('twebTe2App')
       });
 
     $scope.mostCommitedRepo = [];
-    $scope.mostCommitedRepo.push({name:'base', commit:-1});
+    var mostCommitedTmp = [{name:'none', commit:0}, {name:'none', commit:0}, {name:'none', commit:0}];
     $scope.findTheMostCommited = function() {
 
+      var nbrCommit;
       $scope.repos.forEach(function(repo, idx, arr) {
         $http.get(ApiGithub.url + "/repos/" + $stateParams.userLogin + "/" + repo.name + "/stats/contributors")
           .then(function (response) {
             if(response.data[0] === undefined) return;
-            $scope.mostCommitedRepo.push({name:repo.name, commit:response.data[0].total});
+            nbrCommit = response.data[0].total;
+            if(nbrCommit > mostCommitedTmp[0].commit) {
+              mostCommitedTmp[1] = mostCommitedTmp[0];
+              mostCommitedTmp[0] = {name: repo.name, commit: nbrCommit};
+            } else if(nbrCommit > mostCommitedTmp[1].commit) {
+              mostCommitedTmp[2] = mostCommitedTmp[1];
+              mostCommitedTmp[1] = {name: repo.name, commit: nbrCommit};
+            } else if(nbrCommit > mostCommitedTmp[2].commit) {
+              mostCommitedTmp[2] = {name: repo.name, commit: nbrCommit};
+            }
 
             if(idx === arr.length - 1) {
-              $scope.mostCommitedRepo.sort(function(a,b) {
-                return -a.commit + b.commit;
-              });
+              $scope.mostCommitedRepo = mostCommitedTmp;
               $scope.animatePodium();
             }
           }, function (response) {
@@ -70,5 +80,9 @@ angular.module('twebTe2App')
       jQuery('.competition-container .name').delay(1000).animate({
         "opacity": "1"
       }, 500);
+    }
+
+    $scope.statsOfRepo = function(repo) {
+      $state.go('statsRepo', {userLogin:$stateParams.userLogin, repoName:repo.name});
     }
   });

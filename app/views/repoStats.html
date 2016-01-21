@@ -1,0 +1,42 @@
+<div ng-controller="RepoStatsCtrl">
+  <h2><i class="glyphicon glyphicon-stats"></i> Stats of {{repoName}}</h2>
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <h3><i class="glyphicon glyphicon-stats"></i> Commit repartition</h3>
+      <hr>
+      <canvas id="pie" class="chart chart-pie"
+              chart-data="repartition.data" chart-labels="repartition.labels" chart-legend="true">
+      </canvas>
+    </div>
+
+    <div class="col-sm-6">
+      <h3><i class="glyphicon glyphicon-stats"></i> Week Commiting</h3>
+      <hr>
+      <canvas id="bar" class="bar chart-bar" chart-data="weekAct.data"
+              chart-labels="weekAct.labels" chart-legend="true" chart-series="weekAct.series"
+        >
+      </canvas>
+    </div>
+
+    <div class="col-sm-6">
+      <h3><i class="glyphicon glyphicon-stats"></i> Hour Commiting</h3>
+      <hr>
+      <canvas id="line" class="chart chart-line" chart-data="hourAct.data"
+              chart-labels="hourAct.labels" chart-legend="true" chart-series="hourAct.series"
+        >
+      </canvas>
+    </div>
+
+    <div class="col-sm-6">
+      <h3><i class="glyphicon glyphicon-stats"></i> Additions / Deletions</h3>
+      <hr>
+      <canvas id="bar" class="bar chart-bar" chart-data="addDel.data"
+              chart-labels="addDel.labels" chart-legend="true" chart-series="addDel.series"
+        >
+      </canvas>
+    </div>
+  </div>
+</div>
+

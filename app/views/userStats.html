@@ -19,23 +19,46 @@
     </div>
     <!-- /span-3 -->
     <div class="col-sm-9">
-      <h3><i class="glyphicon glyphicon-stats"></i> The most commited podium</h3>
-      <hr>
 
-      <div class="competition-podium">
-        <div class="podium-block bronze">
-          <div class="name">{{mostCommitedRepo[2].name}} <br><strong>{{mostCommitedRepo[2].commit}} commit(s)</strong></div>
-          <div class="podium"><span>3<sup>ème</sup></span></div>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a data-toggle="tab" data-target="#stats" href="">General stats</a></li>
+        <li role="presentation"><a data-toggle="tab" data-target="#repos" href="">Repositories</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="stats" class="tab-pane fade in active">
+          <h3><i class="glyphicon glyphicon-stats"></i> The most commited podium</h3>
+          <hr>
+
+          <div class="competition-podium">
+            <div class="podium-block bronze">
+              <div class="name">{{mostCommitedRepo[2].name}} <br><strong>{{mostCommitedRepo[2].commit}}
+                commit(s)</strong>
+              </div>
+              <div class="podium"><span>3<sup>rd</sup></span></div>
+            </div>
+            <div class="podium-block gold">
+              <div class="name">{{mostCommitedRepo[0].name}} <br><strong>{{mostCommitedRepo[0].commit}}
+                commit(s)</strong>
+              </div>
+              <div class="podium"><span>1<sup>st</sup></span></div>
+            </div>
+            <div class="podium-block silver">
+              <div class="name">{{mostCommitedRepo[1].name}} <br><strong>{{mostCommitedRepo[1].commit}}
+                commit(s)</strong>
+              </div>
+              <div class="podium"><span>2<sup>nd</sup></span></div>
+            </div>
+          </div>
         </div>
-        <div class="podium-block gold">
-          <div class="name">{{mostCommitedRepo[0].name}} <br><strong>{{mostCommitedRepo[0].commit}} commit(s)</strong></div>
-          <div class="podium"><span>1<sup>er</sup></span></div>
-        </div>
-        <div class="podium-block silver">
-          <div class="name">{{mostCommitedRepo[1].name}} <br><strong>{{mostCommitedRepo[1].commit}} commit(s)</strong></div>
-          <div class="podium"><span>2<sup>ème</sup></span></div>
+        <div id="repos" class="tab-pane fade">
+          <ul class="list-group">
+            <li class="list-group-item choice" ng-repeat="repo in repos" ng-click="statsOfRepo(repo)">{{ repo.name }}</li>
+          </ul>
         </div>
       </div>
+
+
     </div>
     <!--/col-span-9-->
 

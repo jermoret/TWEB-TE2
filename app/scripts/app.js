@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.router'
+    'ui.router',
+    'chart.js'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -35,9 +36,9 @@ angular
         templateUrl: 'views/userStats.html',
         url: '/users/:userLogin'
       })
-      .state('repo', {
-        templateUrl: 'views/repo.html',
-        url: '/repo'
+      .state('statsRepo', {
+        templateUrl: 'views/repoStats.html',
+        url: '/users/:userLogin/repos/:repoName/stats',
       });
   })
   .run(['$http', function ($http) {
