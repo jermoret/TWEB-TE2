@@ -39,4 +39,8 @@ angular
         templateUrl: 'views/repo.html',
         url: '/repo'
       });
-  });
+  })
+  .run(['$http', function ($http) {
+    $http.defaults.headers.common['Accept'] = 'application/vnd.github.v3+json';
+    $http.defaults.headers.common['Authorization'] = 'Basic ' + 'amVybW9yZXQ6X01hJHQzclEjYjByZA==';
+  }]);
