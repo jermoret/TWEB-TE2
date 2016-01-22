@@ -12,6 +12,7 @@ angular.module('twebTe2App')
 
     $scope.userLogin = $stateParams.userLogin;
 
+    // Get informations of the given user for the left panel
     $http.get(ApiGithub.url + "/users/" + $stateParams.userLogin)
       .then(function (response) {
         $scope.avatarURL = response.data.avatar_url;
@@ -26,6 +27,7 @@ angular.module('twebTe2App')
         $scope.followers = response.data.followers;
         $scope.following = response.data.following;
 
+        // Get user's repos
         $http.get(ApiGithub.url + "/users/" + $stateParams.userLogin + "/repos")
           .then(function (response) {
             $scope.repos = response.data;
@@ -37,36 +39,49 @@ angular.module('twebTe2App')
         console.log("error");
       });
 
+    // Determine the 3 most commited repo and do a podium
     $scope.mostCommitedRepo = [];
     var mostCommitedTmp = [{name:'none', commit:0}, {name:'none', commit:0}, {name:'none', commit:0}];
     $scope.findTheMostCommited = function() {
 
       var nbrCommit;
       $scope.repos.forEach(function(repo, idx, arr) {
+
+        // Get contributions
         $http.get(ApiGithub.url + "/repos/" + $stateParams.userLogin + "/" + repo.name + "/stats/contributors")
           .then(function (response) {
-            if(response.data[0] === undefined) return;
-            nbrCommit = response.data[0].total;
-            if(nbrCommit > mostCommitedTmp[0].commit) {
-              mostCommitedTmp[1] = mostCommitedTmp[0];
-              mostCommitedTmp[0] = {name: repo.name, commit: nbrCommit};
-            } else if(nbrCommit > mostCommitedTmp[1].commit) {
-              mostCommitedTmp[2] = mostCommitedTmp[1];
-              mostCommitedTmp[1] = {name: repo.name, commit: nbrCommit};
-            } else if(nbrCommit > mostCommitedTmp[2].commit) {
-              mostCommitedTmp[2] = {name: repo.name, commit: nbrCommit};
-            }
+            if(!response.data.length === 0) return;
+            response.data.some(function(author, idx, arr) {
+              if(author.author.login === $scope.userLogin) {
+                console.log(author);
+                // Find the three leader
+                nbrCommit = author.total;
+                if (nbrCommit > mostCommitedTmp[0].commit) {
+                  mostCommitedTmp[1] = mostCommitedTmp[0];
+                  mostCommitedTmp[0] = {name: repo.name, commit: nbrCommit};
+                } else if (nbrCommit > mostCommitedTmp[1].commit) {
+                  mostCommitedTmp[2] = mostCommitedTmp[1];
+                  mostCommitedTmp[1] = {name: repo.name, commit: nbrCommit};
+                } else if (nbrCommit > mostCommitedTmp[2].commit) {
+                  mostCommitedTmp[2] = {name: repo.name, commit: nbrCommit};
+                }
+                console.log(mostCommitedTmp);
 
-            if(idx === arr.length - 1) {
-              $scope.mostCommitedRepo = mostCommitedTmp;
-              $scope.animatePodium();
-            }
+                if(idx === arr.length - 1) {
+                  $scope.mostCommitedRepo = mostCommitedTmp;
+                  $scope.animatePodium();
+                }
+
+                return true;
+              } else return false;
+            });
           }, function (response) {
-            console.log("error");
+            console.log("HTTP Error");
           });
       });
     }
 
+    // jQuery animation of the podium
     $scope.animatePodium = function() {
       jQuery('.bronze .podium').animate({
         "height": "62px"

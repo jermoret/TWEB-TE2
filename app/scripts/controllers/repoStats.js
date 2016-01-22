@@ -4,7 +4,7 @@
  * @ngdoc function
  * @name twebTe2App.controller:RepostatsCtrl
  * @description
- * # RepostatsCtrl
+ * # RepoStatsCtrl
  * Controller of the twebTe2App
  */
 angular.module('twebTe2App')
@@ -20,6 +20,7 @@ angular.module('twebTe2App')
       data: [[],[]]
     }
 
+    // Get commit repartition and additions / deletions of each user
     $http.get(ApiGithub.url + "/repos/" + $scope.ownerName + "/" + $scope.repoName + "/stats/contributors")
       .then(function (response) {
         response.data.forEach(function (contributor, idx, arrR) {
@@ -28,6 +29,8 @@ angular.module('twebTe2App')
           $scope.addDel.data[0].push(0);
           $scope.addDel.data[1].push(0);
           contributor.weeks.forEach(function(week, idxW, arr) {
+
+            // Double loop is terminated we go to week commiting stat
             if(idxW === arr.length - 1 && idx === arrR.length-1) $scope.weekCommiting();
             if(week.c === 0) return;
             $scope.addDel.data[0][idx] += week.a;
@@ -35,30 +38,30 @@ angular.module('twebTe2App')
           });
         });
       }, function (response) {
-        console.log("error");
+        console.log("HTTP Error");
       });
 
     $scope.weekCommiting = function() {
 
-      console.log("Week");
       $scope.weekAct = {
         labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         series: ["Nbr of commit per day"],
         data: [[0, 0, 0, 0, 0, 0, 0]]
       }
 
+      // Get commit by week from the last year and group it
       $http.get(ApiGithub.url + "/repos/" + $scope.ownerName + "/" + $scope.repoName + "/stats/commit_activity")
         .then(function (response) {
           response.data.forEach(function (week, idxR, arrR) {
-            if (week.total === 0) return;
+            if (week.total === 0) return; // No commit this week
             week.days.forEach(function (day, idx, arr) {
               $scope.weekAct.data[0][idx] += day;
             });
           });
         }, function (response) {
-          console.log("error");
+          console.log("HTTP Error");
         });
-      $scope.hourCommiting();
+      $scope.hourCommiting(); // We can go to hour commiting
     };
 
     $scope.hourCommiting = function() {
@@ -79,6 +82,7 @@ angular.module('twebTe2App')
         $scope.hourAct.data[0].push(0);
       }
 
+      // Get commit by hour and group it
       $http.get(ApiGithub.url + "/repos/" + $scope.ownerName + "/" + $scope.repoName + "/stats/punch_card")
         .then(function (response) {
           response.data.forEach(function (hour, idx, arr) {
@@ -86,7 +90,7 @@ angular.module('twebTe2App')
             $scope.hourAct.data[0][hour[1]] += hour[2];
           });
         }, function (response) {
-          console.log("error");
+          console.log("HTTP Error");
         });
     }
   });

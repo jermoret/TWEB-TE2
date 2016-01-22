@@ -10,12 +10,6 @@
  */
 angular
   .module('twebTe2App', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
     'ui.router',
     'chart.js',
     'ui.bootstrap'
