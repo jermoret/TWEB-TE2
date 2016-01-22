@@ -17,17 +17,14 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'chart.js'
+    'chart.js',
+    'ui.bootstrap'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/users');
 
     $stateProvider
-      .state('main', {
-        templateUrl: 'views/main.html',
-        url: '/'
-      })
       .state('searchUser', {
         templateUrl: 'views/user.html',
         url: '/users'
@@ -44,4 +41,4 @@ angular
   .run(['$http', function ($http) {
     $http.defaults.headers.common['Accept'] = 'application/vnd.github.v3+json';
     $http.defaults.headers.common['Authorization'] = 'Basic ' + 'amVybW9yZXQ6X01hJHQzclEjYjByZA==';
-  }]);
+  }])

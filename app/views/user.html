@@ -1,11 +1,10 @@
 <div ng-controller="UserCtrl">
-  <h1>Search an user</h1>
-
-  <p>The first step is to give the user name</p>
+  <h3><i class="glyphicon glyphicon-user"></i> Search an github user</h3>
+  <hr>
 
   <div id="imaginary_container">
     <div class="input-group stylish-input-group">
-      <input type="text" class="form-control" placeholder="Search" ng-model="userName">
+      <input type="text" class="form-control" placeholder="Enter the username..." ng-model="userName" ng-enter="searchUser()">
                     <span class="input-group-addon">
                         <button type="submit" ng-click="searchUser()">
                           <span class="glyphicon glyphicon-search"></span>

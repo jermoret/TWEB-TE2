@@ -19,7 +19,9 @@
         >
       </canvas>
     </div>
+  </div>
 
+  <div class="row">
     <div class="col-sm-6">
       <h3><i class="glyphicon glyphicon-stats"></i> Hour Commiting</h3>
       <hr>
@@ -32,11 +34,18 @@
     <div class="col-sm-6">
       <h3><i class="glyphicon glyphicon-stats"></i> Additions / Deletions</h3>
       <hr>
-      <canvas id="bar" class="bar chart-bar" chart-data="addDel.data"
+      <canvas id="bar2" class="bar chart-bar" chart-data="addDel.data"
               chart-labels="addDel.labels" chart-legend="true" chart-series="addDel.series"
         >
       </canvas>
     </div>
   </div>
+  <div class="row">
+    <a ui-sref="statsUser({userLogin:ownerName})" class="well well-sm">
+      <i class="glyphicon glyphicon-chevron-left"></i> Back to User Stats
+    </a>
+  </div>
+  <br>
 </div>
+
 

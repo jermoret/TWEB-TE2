@@ -38,15 +38,6 @@
 
         <a class="navbar-brand" href="#/">Github Stats</a>
       </div>
-
-      <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-        <ul class="nav navbar-nav">
-          <li ui-sref-active='active'><a ui-sref="main">Home</a></li>
-          <li ui-sref-active='active'><a ui-sref="searchUser">User</a></li>
-          <li ui-sref-active='active'><a ui-sref="repo">Repo</a></li>
-        </ul>
-      </div>
     </div>
   </div>
 </div>
@@ -89,17 +80,18 @@
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/Chart.js/Chart.js"></script>
 <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
-<script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/about.js"></script>
 <script src="scripts/controllers/user.js"></script>
 <script src="scripts/controllers/global_variables.js"></script>
 <script src="scripts/controllers/userStats.js"></script>
 <script src="scripts/controllers/repoStats.js"></script>
+<script src="scripts/controllers/modal.js"></script>
 <!-- endbuild -->
 </body>
 </html>
